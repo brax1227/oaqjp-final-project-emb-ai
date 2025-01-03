@@ -13,7 +13,6 @@ def emotion_detector(text_to_analyze):
 
         if response.status_code == 200:
             response_dict = response.json()
-            print("API Response:", response_dict)  # Debugging: Inspect API response
 
             # Extract emotions
             emotion_predictions = response_dict.get('emotionPredictions', [])
@@ -41,7 +40,14 @@ def emotion_detector(text_to_analyze):
                 'dominant_emotion': dominant_emotion
             }
         else:
-            return {"error": f"Request failed with status code: {response.status_code}", "details": response.text}
+            return {
+                'anger': None,
+                'disgust': None,
+                'fear': None,
+                'joy': None,
+                'sadness': None,
+                'dominant_emotion': None
+            }
 
     except Exception as e:
         return {'error': "An exception has occurred", 'details': str(e)}

@@ -1,10 +1,19 @@
-from flask import Flask, request, jsonify, render_template
+"""
+Flask application for emotion detection using the EmotionDetection package.
+"""
+from flask import Flask, request, jsonify
 from EmotionDetection import emotion_detector
 
 app = Flask(__name__)
 
 @app.route("/emotionDetector", methods=["POST"])
 def detect_emotion():
+    """
+    API endpoint to detect emotions in a given statement.
+
+    Returns:
+        JSON response with emotion scores and the dominant emotion.
+    """
     # Get the input statement from the request
     input_data = request.get_json()
     statement = input_data.get("statement", "")
@@ -17,8 +26,6 @@ def detect_emotion():
 
     if result['dominant_emotion'] is None:
         return jsonify({'response': "Invalid text! Please try again!"}), 400
-    
-
 
     # Format the output response
     response_text = (
